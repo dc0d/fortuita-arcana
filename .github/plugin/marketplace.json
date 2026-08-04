@@ -1,0 +1,19 @@
+{
+  "name": "fortuita-arcana",
+  "owner": {
+    "name": "dc0d",
+    "email": "kaveh.shahbazian@gmail.com"
+  },
+  "metadata": {
+    "description": "Playground collection of AI Agent Skills",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "fortuita-arcana",
+      "description": "Playground collection of AI Agent Skills",
+      "version": "0.1.0",
+      "source": "plugins/fortuita-arcana"
+    }
+  ]
+}
