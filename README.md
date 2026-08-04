@@ -25,3 +25,7 @@ copilot plugin install fortuita-arcana@fortuita-arcana
 ```
 
 To get newer versions later, run `copilot plugin update fortuita-arcana`.
+
+## About the Name
+
+_Fortuita Arcana_ was a magical relic in a TTRPG campaign I once played.
