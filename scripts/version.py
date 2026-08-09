@@ -6,8 +6,10 @@ The same version string appears in four spots across three JSON files
 well-formed bare X.Y.Z, all spots agree, and bumps only go up.
 """
 
+import argparse
 import json
 import re
+import sys
 from pathlib import Path
 
 VERSION_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
@@ -66,3 +68,53 @@ def current_version(root):
     value = values.pop()
     parse_version(value)
     return value
+
+
+def set_version(root, new):
+    new_parts = parse_version(new)
+    current = current_version(root)
+    if new_parts <= parse_version(current):
+        raise VersionError(
+            f"new version {new} must be strictly greater than current {current}"
+        )
+    for path in dict.fromkeys(path for path, _ in SPOTS):
+        file = root / path
+        data = json.loads(file.read_text())
+        for spot_path, keys in SPOTS:
+            if spot_path != path:
+                continue
+            target = data
+            for key in keys[:-1]:
+                target = target[key]
+            target[keys[-1]] = new
+        file.write_text(json.dumps(data, indent=2) + "\n")
+    return current
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=Path(__file__).resolve().parents[1],
+        help="repository root (default: parent of scripts/)",
+    )
+    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers.add_parser("check", help="verify all version spots agree")
+    set_parser = subparsers.add_parser("set", help="write a strictly-greater version")
+    set_parser.add_argument("version", help="new version, bare X.Y.Z")
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "check":
+            print(current_version(args.root))
+        else:
+            previous = set_version(args.root, args.version)
+            print(f"{previous} -> {args.version}")
+    except VersionError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

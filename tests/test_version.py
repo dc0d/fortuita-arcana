@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import sys
 import tempfile
@@ -96,6 +98,72 @@ class CurrentVersionTest(TempTreeTest):
                   meta="banana", entry="banana")
         with self.assertRaises(version.VersionError):
             version.current_version(self.root)
+
+
+class SetVersionTest(TempTreeTest):
+    def test_updates_every_spot(self):
+        make_tree(self.root)
+        previous = version.set_version(self.root, "0.2.0")
+        self.assertEqual(previous, "0.1.0")
+        self.assertEqual(version.current_version(self.root), "0.2.0")
+        for path, _ in version.SPOTS:
+            self.assertIn('"0.2.0"', (self.root / path).read_text())
+
+    def test_rewrite_is_byte_stable_except_version(self):
+        make_tree(self.root)
+        marketplace = self.root / ".github/plugin/marketplace.json"
+        expected = marketplace.read_text().replace("0.1.0", "0.2.0")
+        version.set_version(self.root, "0.2.0")
+        self.assertEqual(marketplace.read_text(), expected)
+
+    def test_rejects_equal_version(self):
+        make_tree(self.root)
+        with self.assertRaises(version.VersionError):
+            version.set_version(self.root, "0.1.0")
+
+    def test_rejects_lower_version(self):
+        make_tree(self.root)
+        with self.assertRaises(version.VersionError):
+            version.set_version(self.root, "0.0.9")
+
+    def test_rejects_malformed_version(self):
+        make_tree(self.root)
+        with self.assertRaises(version.VersionError):
+            version.set_version(self.root, "v0.2.0")
+
+    def test_refuses_to_write_on_drift(self):
+        make_tree(self.root, entry="0.2.0")
+        claude_manifest = self.root / "plugins/fortuita-arcana/.claude-plugin/plugin.json"
+        before = claude_manifest.read_text()
+        with self.assertRaises(version.VersionError):
+            version.set_version(self.root, "0.3.0")
+        self.assertEqual(claude_manifest.read_text(), before)
+
+
+class CliTest(TempTreeTest):
+    def run_cli(self, *argv):
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+            code = version.main(["--root", str(self.root), *argv])
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_check_prints_version(self):
+        make_tree(self.root)
+        code, out, err = self.run_cli("check")
+        self.assertEqual((code, out, err), (0, "0.1.0\n", ""))
+
+    def test_set_reports_transition(self):
+        make_tree(self.root)
+        code, out, err = self.run_cli("set", "0.2.0")
+        self.assertEqual((code, out, err), (0, "0.1.0 -> 0.2.0\n", ""))
+        self.assertEqual(version.current_version(self.root), "0.2.0")
+
+    def test_errors_exit_nonzero_via_stderr(self):
+        make_tree(self.root, entry="9.9.9")
+        code, out, err = self.run_cli("check")
+        self.assertEqual(code, 1)
+        self.assertEqual(out, "")
+        self.assertIn("drift", err)
 
 
 if __name__ == "__main__":
