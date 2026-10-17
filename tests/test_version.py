@@ -13,23 +13,23 @@ import version
 
 def make_tree(root, claude="0.1.0", copilot="0.1.0", meta="0.1.0", entry="0.1.0"):
     """Write the three manifest files carrying the four version spots."""
-    claude_manifest = root / "plugins/fortuita-arcana/.claude-plugin/plugin.json"
-    copilot_manifest = root / "plugins/fortuita-arcana/plugin.json"
+    claude_manifest = root / "plugins/effect-brewery/.claude-plugin/plugin.json"
+    copilot_manifest = root / "plugins/effect-brewery/plugin.json"
     marketplace = root / ".github/plugin/marketplace.json"
     claude_manifest.parent.mkdir(parents=True)
     marketplace.parent.mkdir(parents=True)
     claude_manifest.write_text(
-        json.dumps({"name": "fortuita-arcana", "version": claude}, indent=2) + "\n"
+        json.dumps({"name": "effect-brewery", "version": claude}, indent=2) + "\n"
     )
     copilot_manifest.write_text(
-        json.dumps({"name": "fortuita-arcana", "version": copilot}, indent=2) + "\n"
+        json.dumps({"name": "effect-brewery", "version": copilot}, indent=2) + "\n"
     )
     marketplace.write_text(
         json.dumps(
             {
                 "name": "fortuita-arcana",
                 "metadata": {"description": "x", "version": meta},
-                "plugins": [{"name": "fortuita-arcana", "version": entry}],
+                "plugins": [{"name": "effect-brewery", "version": entry}],
             },
             indent=2,
         )
@@ -78,10 +78,10 @@ class CurrentVersionTest(TempTreeTest):
 
     def test_missing_manifest(self):
         make_tree(self.root)
-        (self.root / "plugins/fortuita-arcana/plugin.json").unlink()
+        (self.root / "plugins/effect-brewery/plugin.json").unlink()
         with self.assertRaises(version.VersionError) as ctx:
             version.current_version(self.root)
-        self.assertIn("plugins/fortuita-arcana/plugin.json", str(ctx.exception))
+        self.assertIn("plugins/effect-brewery/plugin.json", str(ctx.exception))
 
     def test_missing_key(self):
         make_tree(self.root)
@@ -133,7 +133,7 @@ class SetVersionTest(TempTreeTest):
 
     def test_refuses_to_write_on_drift(self):
         make_tree(self.root, entry="0.2.0")
-        claude_manifest = self.root / "plugins/fortuita-arcana/.claude-plugin/plugin.json"
+        claude_manifest = self.root / "plugins/effect-brewery/.claude-plugin/plugin.json"
         before = claude_manifest.read_text()
         with self.assertRaises(version.VersionError):
             version.set_version(self.root, "0.3.0")

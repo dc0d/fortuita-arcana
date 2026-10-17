@@ -10,10 +10,10 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 
 ```
 /plugin marketplace add dc0d/fortuita-arcana
-/plugin install fortuita-arcana@fortuita-arcana
+/plugin install effect-brewery@fortuita-arcana
 ```
 
-This installs the `fortuita-arcana` plugin, making its skills (such as `the-architect`) available in all your projects. To get newer versions later, run `/plugin marketplace update fortuita-arcana`.
+This installs the `effect-brewery` plugin, making its skills (such as `the-architect`) available in all your projects. To get newer versions later, run `/plugin marketplace update fortuita-arcana`.
 
 ### From GitHub Copilot
 
@@ -21,10 +21,10 @@ This repository is also a [Copilot CLI plugin marketplace](https://docs.github.c
 
 ```sh
 copilot plugin marketplace add dc0d/fortuita-arcana
-copilot plugin install fortuita-arcana@fortuita-arcana
+copilot plugin install effect-brewery@fortuita-arcana
 ```
 
-To get newer versions later, run `copilot plugin update fortuita-arcana`.
+To get newer versions later, run `copilot plugin update effect-brewery`.
 
 ## Versioning
 

@@ -15,8 +15,8 @@ from pathlib import Path
 VERSION_RE = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")
 
 SPOTS = [
-    ("plugins/fortuita-arcana/.claude-plugin/plugin.json", ("version",)),
-    ("plugins/fortuita-arcana/plugin.json", ("version",)),
+    ("plugins/effect-brewery/.claude-plugin/plugin.json", ("version",)),
+    ("plugins/effect-brewery/plugin.json", ("version",)),
     (".github/plugin/marketplace.json", ("metadata", "version")),
     (".github/plugin/marketplace.json", ("plugins", 0, "version")),
 ]

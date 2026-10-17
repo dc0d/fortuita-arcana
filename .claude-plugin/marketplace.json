@@ -6,8 +6,8 @@
   },
   "plugins": [
     {
-      "name": "fortuita-arcana",
-      "source": "./plugins/fortuita-arcana",
+      "name": "effect-brewery",
+      "source": "./plugins/effect-brewery",
       "description": "Playground collection of AI Agent Skills"
     }
   ]
