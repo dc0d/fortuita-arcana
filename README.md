@@ -8,7 +8,9 @@ This repository is a plugin marketplace for [Claude Code](https://code.claude.co
 
 | Plugin | Skills |
 | :- | :- |
-| `effect-brewery` | `execplans`, `gh-cli`, `local-archive`, `local-implement`, `local-issue`, `local-plan`, `local-wrap-up`, `the-architect` |
+| `effect-brewery` | `effect-brewery-usage`, `execplans`, `gh-cli`, `local-archive`, `local-implement`, `local-issue`, `local-plan`, `local-wrap-up`, `the-architect` |
+
+The [README of the plugin](plugins/effect-brewery/README.md) explains how its skills take a change from a GitHub issue to a merged pull request.
 
 The plugin was named `fortuita-arcana` before. If you installed `fortuita-arcana@fortuita-arcana`, uninstall it, then install `effect-brewery@fortuita-arcana` as below.
 
