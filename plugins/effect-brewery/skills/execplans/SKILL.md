@@ -53,7 +53,7 @@ Every ExecPlan must include these mandatory sections:
 
 ## Living Document Rules
 
-- Update Progress at every stopping point.
+- Update Progress at every stopping point. Take each Progress timestamp from `date -u '+%Y-%m-%d %H:%MZ'` when the step is done. Never estimate a time, and never tick a step before it is done.
 - Record every design decision in the Decision Log with rationale.
 - Capture surprises with evidence snippets.
 - When you revise a plan, reflect changes across all sections.

@@ -5,7 +5,7 @@ description: Use in a chat when the owner wants to write the ExecPlan of the nex
 
 # Planning in a chat
 
-An ExecPlan is a self-contained, living design-and-implementation document. Here it is one Markdown file in `docs/execplans/`, in the draft pull request that will implement it, so the owner reviews the plan as a pull request. The owner is in this chat: ask, never guess.
+An ExecPlan is a self-contained, living design-and-implementation document. Here it is one Markdown file in `docs/execplans/`, in the draft pull request that will implement it, so the owner reviews the plan as a pull request. The owner is in this chat: ask the questions that the sections below name, and decide the rest. If you cannot do a step as this skill says, tell the owner, and stop.
 
 Write and change a plan with the skill `effect-brewery:execplans`: read its `SKILL.md` and `references/PLANS.md` in full before you start, follow them to the letter, and start a new plan from the skeleton of `references/PLANS.md`. Be thorough in reading (and re-reading) source material. When a design has challenging requirements or significant unknowns, use milestones with proofs of concept. If that skill is not available, tell the owner to install the plugin `effect-brewery`, and stop.
 
@@ -20,6 +20,8 @@ Write and change a plan with the skill `effect-brewery:execplans`: read its `SKI
 - Change and commit only the plan file.
 - Never edit the issue. Propose changes to its scope or acceptance criteria in the chat.
 - A question is an open question that the issue lists, or a gap or contradiction that makes an acceptance criterion impossible to verify. Ask the owner, one question at a time, and record each answer in the Decision Log. Everything else is a design decision: decide it, and record it with its reason in the Decision Log.
+- When the plan changes the code of an application, a service, or a library, make its decisions about the structure of that code with the skill `effect-brewery:the-architect`, before you write the Plan of Work: which module holds the new behavior, each new or changed module, interface, or contract, each way that errors cross a boundary, and each existing structure that the change keeps. Do not use the skill for a plan that changes only scripts, CI/CD and workflow files, infrastructure, configuration, or documentation. If the skill is not available, go on without it, and tell the owner.
+- A workaround is a design that keeps an existing structure and bends the new work around it, although a change of that structure is the better design. When the plan chooses a workaround, for example to keep the slice small, to stay inside the issue's scope, or to keep a test that fixes today's behavior, record the decision in the Decision Log with a line `Debt:` after its Rationale. That line names the structure that stays, and the change that would remove the workaround. Tell the owner about each debt in the chat. When an acceptance criterion forces the workaround, also propose the change of the issue in the chat.
 - With an issue, restate its acceptance criteria in Validation and Acceptance, without checkboxes. Without one, the plan states its own goal in Purpose.
 - Never resolve a review thread, mark the pull request ready, or merge it: that is the owner's step.
 - Post no status comment. Tell the owner in the chat what you did, with the URLs.
