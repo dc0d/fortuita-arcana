@@ -8,11 +8,11 @@ This repository is a plugin marketplace for [Claude Code](https://code.claude.co
 
 | Plugin | Skills |
 | :- | :- |
-| `effect-brewery` | `effect-brewery-usage`, `execplans`, `gh-cli`, `local-archive`, `local-implement`, `local-issue`, `local-plan`, `local-wrap-up`, `the-architect` |
+| `conveyor-belt` | `conveyor-belt-usage`, `execplans`, `gh-cli`, `local-archive`, `local-implement`, `local-issue`, `local-plan`, `local-wrap-up`, `the-architect` |
 
-The [README of the plugin](plugins/effect-brewery/README.md) explains how its skills take a change from a GitHub issue to a merged pull request.
+The [README of the plugin](plugins/conveyor-belt/README.md) explains how its skills take a change from a GitHub issue to a merged pull request.
 
-The plugin was named `fortuita-arcana` before. If you installed `fortuita-arcana@fortuita-arcana`, uninstall it, then install `effect-brewery@fortuita-arcana` as below.
+The plugin was named `effect-brewery` before, and `fortuita-arcana` before that. If you installed `effect-brewery@fortuita-arcana` or `fortuita-arcana@fortuita-arcana`, uninstall it, then install `conveyor-belt@fortuita-arcana` as below.
 
 ## Claude Code
 
@@ -22,14 +22,14 @@ CLI:
 
 ```sh
 claude plugin marketplace add dc0d/fortuita-arcana
-claude plugin install effect-brewery@fortuita-arcana
+claude plugin install conveyor-belt@fortuita-arcana
 ```
 
 TUI:
 
 ```text
 /plugin marketplace add dc0d/fortuita-arcana
-/plugin install effect-brewery@fortuita-arcana
+/plugin install conveyor-belt@fortuita-arcana
 ```
 
 In the TUI, `/plugin install` opens the plugin. Select a scope to install it.
@@ -40,7 +40,7 @@ CLI:
 
 ```sh
 claude plugin marketplace update fortuita-arcana
-claude plugin update effect-brewery@fortuita-arcana
+claude plugin update conveyor-belt@fortuita-arcana
 ```
 
 TUI:
@@ -63,14 +63,14 @@ CLI:
 
 ```sh
 copilot plugin marketplace add dc0d/fortuita-arcana
-copilot plugin install effect-brewery@fortuita-arcana
+copilot plugin install conveyor-belt@fortuita-arcana
 ```
 
 TUI:
 
 ```text
 /plugin marketplace add dc0d/fortuita-arcana
-/plugin install effect-brewery@fortuita-arcana
+/plugin install conveyor-belt@fortuita-arcana
 ```
 
 ### Update
@@ -79,14 +79,14 @@ CLI:
 
 ```sh
 copilot plugin marketplace update fortuita-arcana
-copilot plugin update effect-brewery@fortuita-arcana
+copilot plugin update conveyor-belt@fortuita-arcana
 ```
 
 TUI:
 
 ```text
 /plugin marketplace update fortuita-arcana
-/plugin update effect-brewery@fortuita-arcana
+/plugin update conveyor-belt@fortuita-arcana
 ```
 
 After an install or update, start a new session, or run `/restart` in an open session.

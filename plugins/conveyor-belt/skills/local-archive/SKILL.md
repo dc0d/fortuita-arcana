@@ -21,7 +21,7 @@ An ExecPlan is a self-contained, living design-and-implementation document, kept
 
 ## Finished ExecPlans
 
-A file is an ExecPlan when it is a Markdown file directly in `docs/execplans/` and it has a line that starts with `This ExecPlan is a living document.` before its first `## ` heading. That line opens the skeleton of `references/PLANS.md` of the skill `execplans` of the plugin `effect-brewery`. An ExecPlan is finished when it has a `## Progress` section and no line of that section is an unchecked box (`- [ ]`, `* [ ]`, or `+ [ ]`, indented or not). This is the rule of `local-plan`.
+A file is an ExecPlan when it is a Markdown file directly in `docs/execplans/` and it has a line that starts with `This ExecPlan is a living document.` before its first `## ` heading. That line opens the skeleton of `references/PLANS.md` of the skill `execplans` of the plugin `conveyor-belt`. An ExecPlan is finished when it has a `## Progress` section and no line of that section is an unchecked box (`- [ ]`, `* [ ]`, or `+ [ ]`, indented or not). This is the rule of `local-plan`.
 
 Every other file stays where it is and does not change: for example `AGENTS.md`, a notes file, a plan in another format, an ExecPlan with an unchecked box, and every file in a subdirectory of `docs/execplans/`.
 

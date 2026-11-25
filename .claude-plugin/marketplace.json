@@ -6,8 +6,8 @@
   },
   "plugins": [
     {
-      "name": "effect-brewery",
-      "source": "./plugins/effect-brewery",
+      "name": "conveyor-belt",
+      "source": "./plugins/conveyor-belt",
       "description": "Playground collection of AI Agent Skills"
     }
   ]

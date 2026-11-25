@@ -5,7 +5,7 @@ description: Use in a chat when the owner wants to implement the ExecPlan file o
 
 # Implementing an ExecPlan in a chat
 
-An ExecPlan is a self-contained, living design-and-implementation document. Here it is one Markdown file in `docs/execplans/`, in the pull request that implements it. Keep it by the rules of the skill `effect-brewery:execplans`: read its `SKILL.md` and `references/PLANS.md` before you change the plan. If that skill is not available, tell the owner to install the plugin `effect-brewery`, and stop. The owner is in this chat: ask, never guess.
+An ExecPlan is a self-contained, living design-and-implementation document. Here it is one Markdown file in `docs/execplans/`, in the pull request that implements it. Keep it by the rules of the skill `conveyor-belt:execplans`: read its `SKILL.md` and `references/PLANS.md` before you change the plan. If that skill is not available, tell the owner to install the plugin `conveyor-belt`, and stop. The owner is in this chat: ask, never guess.
 
 ## Rules that always apply
 
@@ -15,7 +15,7 @@ An ExecPlan is a self-contained, living design-and-implementation document. Here
 - Never change the issue. Never add a second plan file to the pull request.
 - Keep the plan's Progress, Surprises & Discoveries, Decision Log, and Outcomes & Retrospective current, in the same commits as the code.
 - A question is an ambiguity that changes what the plan delivers or how it is accepted, and that the plan, the issue, and the repository cannot settle. Ask the owner, one question at a time. Everything else is a design decision: decide it, and record it with its reason in the plan's Decision Log.
-- Use the skill `effect-brewery:the-architect` only when a milestone adds or reshapes the structure of the code of an application or service: new or changed modules, interfaces, contracts, or ways that errors cross a boundary. Use it before you write that code, for the design decisions that the plan leaves open. Do not use it for a feature that fits inside the existing structure, for scripts, for CI/CD and workflow files, for infrastructure or configuration, or for documentation. If a milestone mixes these, use it for the application part only. The plan and the owner's review feedback still win over the skill: if the skill shows that the plan's design is wrong, ask the owner. If the skill is not available, go on without it, and tell the owner.
+- Use the skill `conveyor-belt:the-architect` only when a milestone adds or reshapes the structure of the code of an application or service: new or changed modules, interfaces, contracts, or ways that errors cross a boundary. Use it before you write that code, for the design decisions that the plan leaves open. Do not use it for a feature that fits inside the existing structure, for scripts, for CI/CD and workflow files, for infrastructure or configuration, or for documentation. If a milestone mixes these, use it for the application part only. The plan and the owner's review feedback still win over the skill: if the skill shows that the plan's design is wrong, ask the owner. If the skill is not available, go on without it, and tell the owner.
 - In the Progress entry of each milestone that changes the code of an application or service, write `the-architect: used`, or `the-architect: not used, because <reason>`.
 - A workaround is a design that keeps an existing structure and bends the new work around it, although a change of that structure is the better design. When you choose a workaround, for example to follow the plan or the owner's review feedback, record the decision in the Decision Log with a line `Debt:` after its Rationale. That line names the structure that stays, and the change that would remove the workaround. Tell the owner about each new debt in the chat.
 - The owner's review feedback is a requirement for this pull request. If it contradicts the plan, follow the feedback, and record the change in the Decision Log.
@@ -44,7 +44,7 @@ gh pr view <pull request> --json title,commits | jq -r '
 The owner names a pull request, an issue, or a branch.
 
 - A pull request: check out its branch with `gh pr checkout <number>`.
-- An issue: list its pull requests with the command below, and check out the OPEN one. When none is OPEN, the issue needs its next plan first: tell the owner (the skill `effect-brewery:local-plan`).
+- An issue: list its pull requests with the command below, and check out the OPEN one. When none is OPEN, the issue needs its next plan first: tell the owner (the skill `conveyor-belt:local-plan`).
 - A branch with a plan file and no pull request: push it, and open the draft pull request, titled as "Titles and commit subjects" says: `gh pr create --draft --base <default branch> --title "<title>" --body-file <file>`. Its body has the line `Part of #<issue>` on a line of its own only when the work has an issue. Add no label.
 
 ```bash
@@ -65,4 +65,4 @@ The plan is the one file under `docs/execplans/` that the pull request adds or c
 4. Push. After each push, run the title check for the pull request. If it marks the title, fix the title with `gh pr edit <number> --title "<title>"`. If it marks a pushed commit subject, do not rewrite pushed commits: tell the owner, who can edit the commit message when merging.
 5. Reply to each review comment on its own, in its thread. An inline comment gets an inline reply: write the reply to a file outside the repository, and post it with `gh api repos/{owner}/{repo}/pulls/<number>/comments/<id>/replies -F body=@<file>`. Say what you changed and in which commit, or why you changed nothing.
 6. Keep the plan file current as you go: Progress with timestamps, Surprises & Discoveries, the Decision Log, and Outcomes & Retrospective when every milestone is done. If the owner merges before every milestone is done, the unchecked items stay, and the issue's next pull request continues the same plan file.
-7. Tell the owner what you did and what remains. When the owner says that the pull request is merged, use the skill `effect-brewery:local-wrap-up`.
+7. Tell the owner what you did and what remains. When the owner says that the pull request is merged, use the skill `conveyor-belt:local-wrap-up`.

@@ -1,20 +1,20 @@
 ---
-name: effect-brewery-usage
-description: Use when a user asks how to use the effect-brewery plugin, what a working round looks like, which command starts a stage, or which effect-brewery stage comes next for a GitHub issue or pull request.
+name: conveyor-belt-usage
+description: Use when a user asks how to use the conveyor-belt plugin, what a working round looks like, which command starts a stage, or which conveyor-belt stage comes next for a GitHub issue or pull request.
 ---
 
-# Using effect-brewery
+# Using conveyor-belt
 
-This skill explains a working round of the plugin `effect-brewery`, and says which stage comes next for an issue or a pull request. It only reads: it never changes an issue, a pull request, or the repository, and it never starts a stage. The user starts the stage with its command, in a fresh session.
+This skill explains a working round of the plugin `conveyor-belt`, and says which stage comes next for an issue or a pull request. It only reads: it never changes an issue, a pull request, or the repository, and it never starts a stage. The user starts the stage with its command, in a fresh session.
 
 ## A working round
 
-A working round takes a change from a GitHub issue to a merged pull request in four stages. Each stage is a skill of the plugin that the user starts with a command. In Claude Code, the command is `/effect-brewery:<skill> <argument>`. In Copilot CLI, it is `/<skill> <argument>`, or `/effect-brewery:<skill> <argument>` when another installed plugin has a skill of the same name. The list below gives the Claude Code form.
+A working round takes a change from a GitHub issue to a merged pull request in four stages. Each stage is a skill of the plugin that the user starts with a command. In Claude Code, the command is `/conveyor-belt:<skill> <argument>`. In Copilot CLI, it is `/<skill> <argument>`, or `/conveyor-belt:<skill> <argument>` when another installed plugin has a skill of the same name. The list below gives the Claude Code form.
 
-1. Issue: `/effect-brewery:local-issue <the goal, in your words>`, or `/effect-brewery:local-issue #<issue>` to refine an existing issue. The user describes the change, its acceptance criteria, and its context. The agent asks for the repository and for a project board, and one question at a time about gaps. It publishes only after the user approves. It produces a GitHub issue with a section `## Acceptance criteria` of checkboxes.
-2. Plan: `/effect-brewery:local-plan #<issue>`, in a checkout of the issue's repository. The agent asks for the template of the branch name, and the questions that block an acceptance criterion. It records every other choice in the plan's Decision Log. It produces a branch, an ExecPlan file in `docs/execplans/`, and a draft pull request with the line `Part of #<issue>`. `/effect-brewery:local-plan #<pull request>` changes the plan of an open pull request after the user's review.
-3. Implement: `/effect-brewery:local-implement #<pull request>`. The agent fixes failed checks, addresses review feedback, implements the plan's milestones, and replies to each review comment. The user's review comments are requirements. The agent asks only about an ambiguity that changes what the plan delivers or how it is accepted. It produces the commits of the plan in the pull request. Then the user reviews the pull request, marks it ready, and merges it: no stage does that.
-4. Wrap Up: `/effect-brewery:local-wrap-up #<pull request>`, after the merge. The agent ticks the acceptance criteria that the evidence of the merged pull request shows are met, and posts one comment on the issue. It asks the user before it closes the issue. It produces ticked boxes, a comment, and, after the user's yes, a closed issue.
+1. Issue: `/conveyor-belt:local-issue <the goal, in your words>`, or `/conveyor-belt:local-issue #<issue>` to refine an existing issue. The user describes the change, its acceptance criteria, and its context. The agent asks for the repository and for a project board, and one question at a time about gaps. It publishes only after the user approves. It produces a GitHub issue with a section `## Acceptance criteria` of checkboxes.
+2. Plan: `/conveyor-belt:local-plan #<issue>`, in a checkout of the issue's repository. The agent asks for the template of the branch name, and the questions that block an acceptance criterion. It records every other choice in the plan's Decision Log. It produces a branch, an ExecPlan file in `docs/execplans/`, and a draft pull request with the line `Part of #<issue>`. `/conveyor-belt:local-plan #<pull request>` changes the plan of an open pull request after the user's review.
+3. Implement: `/conveyor-belt:local-implement #<pull request>`. The agent fixes failed checks, addresses review feedback, implements the plan's milestones, and replies to each review comment. The user's review comments are requirements. The agent asks only about an ambiguity that changes what the plan delivers or how it is accepted. It produces the commits of the plan in the pull request. Then the user reviews the pull request, marks it ready, and merges it: no stage does that.
+4. Wrap Up: `/conveyor-belt:local-wrap-up #<pull request>`, after the merge. The agent ticks the acceptance criteria that the evidence of the merged pull request shows are met, and posts one comment on the issue. It asks the user before it closes the issue. It produces ticked boxes, a comment, and, after the user's yes, a closed issue.
 
 When Wrap Up leaves acceptance criteria unmet, another round starts at Plan with the same issue. When an issue has three merged pull requests, Plan asks to split it into smaller issues, which the user writes with Issue.
 
@@ -44,12 +44,12 @@ gh api "repos/{owner}/{repo}/issues/<n>" --jq 'if .pull_request then "pull reque
 ### For a pull request
 
 1. Run `gh pr view <p> --json state --jq .state`. When it prints `OPEN`, apply "For an open pull request".
-2. When it prints `MERGED` or `CLOSED`, find its issues with the command "Issues of a pull request". With none, effect-brewery has no next stage for it: say so. For each issue, check its state: when the issue is `CLOSED`, its round is over.
+2. When it prints `MERGED` or `CLOSED`, find its issues with the command "Issues of a pull request". With none, conveyor-belt has no next stage for it: say so. For each issue, check its state: when the issue is `CLOSED`, its round is over.
 3. When the pull request is `MERGED` and the open issue has no comment that starts with `Merged #<p> `, the next stage is Wrap Up with `<p>`. Otherwise, apply "For an issue". A `CLOSED` pull request was closed without a merge, so it never leads to Wrap Up.
 
 ### For an open pull request
 
-Count its plan files with the command "Plan files of a pull request". With exactly one, the next stage is Implement with `<p>`. Add that `/effect-brewery:local-plan #<p>` changes its plan when the plan needs a change before the work. Wrap Up with `<p>` comes after the user reviews and merges it. With none or more than one, effect-brewery cannot continue it: Implement needs exactly one plan file under `docs/execplans/` in the pull request. Say so, with the number of plan files that you found.
+Count its plan files with the command "Plan files of a pull request". With exactly one, the next stage is Implement with `<p>`. Add that `/conveyor-belt:local-plan #<p>` changes its plan when the plan needs a change before the work. Wrap Up with `<p>` comes after the user reviews and merges it. With none or more than one, conveyor-belt cannot continue it: Implement needs exactly one plan file under `docs/execplans/` in the pull request. Say so, with the number of plan files that you found.
 
 ### Commands
 
@@ -96,4 +96,4 @@ gh pr diff <p> --name-only | awk '/^docs\/execplans\// { n++ } END { print n + 0
 
 ## Answer
 
-Say the stage and the reason in one or two sentences, with the states that you found. Give the command for Claude Code and the command for Copilot CLI, with the number filled in. Tell the user to run it in a fresh session. When there is no next stage, say why. When the user asked how to use effect-brewery, explain the round from "A working round" instead. For each stage, give its commands, what the user does, what the agent does, and what the stage produces. End with the advice about fresh sessions.
+Say the stage and the reason in one or two sentences, with the states that you found. Give the command for Claude Code and the command for Copilot CLI, with the number filled in. Tell the user to run it in a fresh session. When there is no next stage, say why. When the user asked how to use conveyor-belt, explain the round from "A working round" instead. For each stage, give its commands, what the user does, what the agent does, and what the stage produces. End with the advice about fresh sessions.

@@ -135,7 +135,7 @@ gh issue view <n> --json body --jq .body | awk '
   END { print open + 0, total + 0 }'
 ```
 
-- Some box is unticked: do not close the issue. Tell the owner which criteria remain. When no pull request of the issue is OPEN (use the command in "Find the pull requests of an issue"), the next step is the skill `effect-brewery:local-plan`.
+- Some box is unticked: do not close the issue. Tell the owner which criteria remain. When no pull request of the issue is OPEN (use the command in "Find the pull requests of an issue"), the next step is the skill `conveyor-belt:local-plan`.
 - No box is unticked, there is at least one box, and no pull request of the issue is OPEN: tell the owner that the issue looks complete, and ask whether to close it. Close it only after the owner says yes, with `gh issue close <n> --reason completed`.
 - The section has no box: a program cannot judge whether the issue is complete. Tell the owner, and close the issue only if the owner says so.
 
