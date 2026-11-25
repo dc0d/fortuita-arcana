@@ -1,6 +1,6 @@
-# effect-brewery
+# conveyor-belt
 
-The plugin `effect-brewery` takes a change from a GitHub issue to a merged pull request. A working round has four stages: Issue, Plan, Implement, and Wrap Up. Each stage is a skill that you start with a command. The other skills support the stages.
+The plugin `conveyor-belt` takes a change from a GitHub issue to a merged pull request. A working round has four stages: Issue, Plan, Implement, and Wrap Up. Each stage is a skill that you start with a command. The other skills support the stages.
 
 | Skill | Role |
 | :- | :- |
@@ -8,7 +8,7 @@ The plugin `effect-brewery` takes a change from a GitHub issue to a merged pull 
 | `local-plan` | Plan: writes the ExecPlan in a draft pull request |
 | `local-implement` | Implement: implements the plan in that pull request |
 | `local-wrap-up` | Wrap Up: records the merge on the issue |
-| `effect-brewery-usage` | Explains the round, and says which stage comes next |
+| `conveyor-belt-usage` | Explains the round, and says which stage comes next |
 | `execplans` | The ExecPlan format that Plan and Implement follow |
 | `the-architect` | Design decisions, which Plan and Implement use when they shape the structure of code |
 | `local-archive` | Moves finished ExecPlans to `docs/execplans/archived/` |
@@ -20,7 +20,7 @@ Install the plugin as the root README says for [Claude Code](../../README.md#cla
 
 Plan, Implement, and Wrap Up work in the repository of the current checkout. Start the agent for these stages in a checkout of the issue's repository.
 
-A command starts a skill. In Claude Code, the command is `/effect-brewery:<skill> <argument>`, for example `/effect-brewery:local-plan #49`. In Copilot CLI, it is `/<skill> <argument>`, for example `/local-plan #49`. When another installed plugin has a skill of the same name, Copilot CLI needs `/effect-brewery:<skill> <argument>` too. `copilot skill list` shows the name to use.
+A command starts a skill. In Claude Code, the command is `/conveyor-belt:<skill> <argument>`, for example `/conveyor-belt:local-plan #49`. In Copilot CLI, it is `/<skill> <argument>`, for example `/local-plan #49`. When another installed plugin has a skill of the same name, Copilot CLI needs `/conveyor-belt:<skill> <argument>` too. `copilot skill list` shows the name to use.
 
 ## A working round
 
@@ -30,7 +30,7 @@ Each stage reads what it needs from GitHub: the issue, the pull request, and the
 
 ## Issue
 
-Start it with `/effect-brewery:local-issue <the goal, in your words>` in Claude Code, or `/local-issue <the goal, in your words>` in Copilot CLI. To refine an existing issue, give its number instead: `#<issue>`.
+Start it with `/conveyor-belt:local-issue <the goal, in your words>` in Claude Code, or `/local-issue <the goal, in your words>` in Copilot CLI. To refine an existing issue, give its number instead: `#<issue>`.
 
 **You:** Describe the change, its acceptance criteria, and its context. Give the agent access to what it needs for context, for example GitHub, the services that the change touches, or MCP tools. MCP, the Model Context Protocol, connects an agent to tools.
 
@@ -42,7 +42,7 @@ Start it with `/effect-brewery:local-issue <the goal, in your words>` in Claude 
 
 ## Plan
 
-Start it in a checkout of the issue's repository with `/effect-brewery:local-plan #<issue>` in Claude Code, or `/local-plan #<issue>` in Copilot CLI.
+Start it in a checkout of the issue's repository with `/conveyor-belt:local-plan #<issue>` in Claude Code, or `/local-plan #<issue>` in Copilot CLI.
 
 **You:** Review the plan in the draft pull request that the agent opens. A draft pull request is one that GitHub marks as not ready to merge. To change the plan, comment on the pull request, then start the stage with the number of the pull request: `#<pull request>`. You can also describe the change in that chat. The agent makes the change, addresses the review comments, and replies to each comment in its thread.
 
@@ -54,7 +54,7 @@ Start it in a checkout of the issue's repository with `/effect-brewery:local-pla
 
 ## Implement
 
-Start it in a checkout of the repository with `/effect-brewery:local-implement #<pull request>` in Claude Code, or `/local-implement #<pull request>` in Copilot CLI. You can give the number of the issue instead: then the agent takes the open pull request of the issue.
+Start it in a checkout of the repository with `/conveyor-belt:local-implement #<pull request>` in Claude Code, or `/local-implement #<pull request>` in Copilot CLI. You can give the number of the issue instead: then the agent takes the open pull request of the issue.
 
 **You:** Make sure that the repository names its checks in its CLAUDE.md, README, or CI workflow, for example a `make check` target. The agent runs these checks. Review the pull request, and start the stage again to address your review comments. When the work is done, mark the pull request ready, and merge it.
 
@@ -66,7 +66,7 @@ Start it in a checkout of the repository with `/effect-brewery:local-implement #
 
 ## Wrap Up
 
-After you merge the pull request, start it in a checkout of the repository with `/effect-brewery:local-wrap-up #<pull request>` in Claude Code, or `/local-wrap-up #<pull request>` in Copilot CLI. You can give the number of the issue instead: then the agent takes the newest merged pull request of the issue.
+After you merge the pull request, start it in a checkout of the repository with `/conveyor-belt:local-wrap-up #<pull request>` in Claude Code, or `/local-wrap-up #<pull request>` in Copilot CLI. You can give the number of the issue instead: then the agent takes the newest merged pull request of the issue.
 
 **The agent:** It works on each issue that the pull request names with `Part of #<issue>`. It reads the plan as it was in the merge commit, and the checks of the pull request. It ticks each box of the issue's acceptance criteria that this evidence shows is met. When the evidence is partial or missing, it leaves the box unticked. It posts one comment on the issue: what the pull request delivered, which boxes it ticked, and which remain. It changes nothing else on the issue, and never changes the pull request.
 
@@ -80,8 +80,8 @@ When Wrap Up leaves acceptance criteria unmet, the next round starts at Plan wit
 
 ## Which stage comes next
 
-The agent can tell you which stage comes next for an issue or a pull request. Start it in a checkout of the repository with `/effect-brewery:effect-brewery-usage #<issue or pull request>` in Claude Code, or `/effect-brewery-usage #<issue or pull request>` in Copilot CLI. You can also ask in your own words, for example "Which effect-brewery stage comes next for #49?". The agent reads the issue or the pull request on GitHub, and changes nothing. It gives you the command of the next stage, to run in a fresh session. Ask "How do I use effect-brewery?" to make it explain the round.
+The agent can tell you which stage comes next for an issue or a pull request. Start it in a checkout of the repository with `/conveyor-belt:conveyor-belt-usage #<issue or pull request>` in Claude Code, or `/conveyor-belt-usage #<issue or pull request>` in Copilot CLI. You can also ask in your own words, for example "Which conveyor-belt stage comes next for #49?". The agent reads the issue or the pull request on GitHub, and changes nothing. It gives you the command of the next stage, to run in a fresh session. Ask "How do I use conveyor-belt?" to make it explain the round.
 
 ## Archive finished plans
 
-A finished plan stays in `docs/execplans/`. To move every finished plan to `docs/execplans/archived/`, start `/effect-brewery:local-archive` in Claude Code, or `/local-archive` in Copilot CLI, in a checkout of the repository. The agent opens one pull request that holds only the moves. It asks for the template of the branch name, as Plan does.
+A finished plan stays in `docs/execplans/`. To move every finished plan to `docs/execplans/archived/`, start `/conveyor-belt:local-archive` in Claude Code, or `/local-archive` in Copilot CLI, in a checkout of the repository. The agent opens one pull request that holds only the moves. It asks for the template of the branch name, as Plan does.
